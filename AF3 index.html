@@ -1,0 +1,481 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Portal - Login & Cadastro</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome / Lucide icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        .animate-float-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .animate-float-fast {
+            animation: float 5s ease-in-out infinite reverse;
+        }
+
+        .animate-pulse-glow {
+            animation: pulseGlow 6s ease-in-out infinite;
+        }
+
+        /* Glassmorphism custom styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-input {
+            background: rgba(243, 244, 246, 0.8);
+            backdrop-filter: blur(8px);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-input:focus {
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Input floating label behavior */
+        .peer:placeholder-shown ~ label {
+            transform: translateY(0) scale(1);
+            color: #9ca3af;
+        }
+
+        .peer:focus ~ label,
+        .peer:not(:placeholder-shown) ~ label {
+            transform: translateY(-24px) scale(0.85);
+            color: #6366f1;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen text-slate-800 flex items-center justify-center p-0 md:p-6 lg:p-10 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <main class="w-full max-w-7xl min-h-screen md:min-h-[780px] bg-white rounded-none md:rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 relative border border-slate-200/50">
+
+        <!-- ========================================================================= -->
+        <!-- LEFT SIDE: Branding / Hero Banner (Lg: 7 cols) -->
+        <!-- ========================================================================= -->
+        <section class="lg:col-span-7 relative bg-slate-900 text-white p-8 lg:p-12 flex flex-col justify-between overflow-hidden min-h-[380px] lg:min-h-full">
+            
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop" 
+                     alt="Abstract Futuristic Background" 
+                     class="w-full h-full object-cover object-center opacity-40 mix-blend-overlay scale-105" 
+                     onerror="this.src='https://placehold.co/1200x900/0f172a/ffffff?text=SaaS+Platform'"/>
+                <div class="absolute inset-0 bg-gradient-to-tr from-slate-950 via-indigo-950/80 to-purple-900/40"></div>
+            </div>
+
+            <!-- Floating Glow Bubbles -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl animate-pulse-glow pointer-events-none"></div>
+            <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl animate-pulse-glow pointer-events-none" style="animation-delay: 3s;"></div>
+
+            <!-- Brand Header -->
+            <div class="relative z-10 flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30 border border-white/20">
+                    <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="text-2xl font-bold tracking-tight text-white">Nova<span class="text-indigo-400">SaaS</span></span>
+            </div>
+
+            <!-- Floating Feature Cards (Visual Polish) -->
+            <div class="relative z-10 my-auto py-12">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 backdrop-blur-md mb-6">
+                    <span class="flex h-2 w-2 rounded-full bg-indigo-400 animate-ping"></span>
+                    <span class="text-xs font-semibold text-indigo-300 uppercase tracking-wider">Nova Versão 3.0</span>
+                </div>
+
+                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-6">
+                    Eleve o fluxo de trabalho da sua equipe ao próximo nível.
+                </h1>
+                
+                <p class="text-slate-300 text-base lg:text-lg max-w-xl font-normal leading-relaxed mb-8">
+                    Gerencie projetos, analise dados em tempo real e colabore com automações inteligentes em uma única plataforma integrada.
+                </p>
+
+                <!-- Floating Glass Card Badge -->
+                <div class="hidden sm:flex items-center gap-4 glass-card p-4 rounded-2xl max-w-md animate-float-slow">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                        <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">+148% de Produtividade</div>
+                        <div class="text-xs text-slate-300">Constatado por mais de 10.000 empresas parceiras.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Footer -->
+            <div class="relative z-10 flex items-center justify-between text-xs text-slate-400 pt-6 border-t border-white/10">
+                <p>&copy; 2026 NovaSaaS Inc. Todos os direitos reservados.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white transition">Privacidade</a>
+                    <a href="#" class="hover:text-white transition">Termos</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- RIGHT SIDE: Auth Form Container (Lg: 5 cols) -->
+        <!-- ========================================================================= -->
+        <section class="lg:col-span-5 bg-white p-6 sm:p-10 lg:p-12 flex flex-col justify-center relative">
+            
+            <!-- Tab Switcher Header -->
+            <div class="mb-8">
+                <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200/80 max-w-sm mx-auto lg:mx-0">
+                    <button id="tab-login-btn" onclick="switchTab('login')" class="flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 bg-white text-slate-900 shadow-sm">
+                        Entrar
+                    </button>
+                    <button id="tab-register-btn" onclick="switchTab('register')" class="flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 text-slate-500 hover:text-slate-900">
+                        Cadastrar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Toast Notification Container -->
+            <div id="toast-message" class="hidden mb-6 p-4 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-3"></div>
+
+            <!-- ================= FORM 1: LOGIN ================= -->
+            <div id="login-form-container" class="transition-all duration-300">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Bem-vindo de volta! 👋</h2>
+                    <p class="text-slate-500 text-sm mt-1">Acesse sua conta para continuar gerenciando seus projetos.</p>
+                </div>
+
+                <!-- Social Login Buttons -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <button type="button" onclick="handleSocialAuth('Google')" class="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-medium text-slate-700 text-sm transition shadow-sm">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                        Google
+                    </button>
+
+                    <button type="button" onclick="handleSocialAuth('GitHub')" class="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-medium text-slate-700 text-sm transition shadow-sm">
+                        <i data-lucide="github" class="w-4 h-4 text-slate-900"></i>
+                        GitHub
+                    </button>
+                </div>
+
+                <div class="relative flex items-center justify-center mb-6">
+                    <div class="border-t border-slate-200 w-full"></div>
+                    <span class="bg-white px-3 text-xs font-medium text-slate-400 uppercase tracking-wider absolute">Ou entre com e-mail</span>
+                </div>
+
+                <!-- Main Login Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <!-- Email Field -->
+                    <div class="relative">
+                        <input type="email" id="login-email" required placeholder=" " 
+                               class="peer w-full px-4 pt-6 pb-2 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                        <label for="login-email" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                            <i data-lucide="mail" class="w-4 h-4"></i> E-mail corporativo
+                        </label>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="relative">
+                        <input type="password" id="login-password" required placeholder=" " 
+                               class="peer w-full px-4 pt-6 pb-2 pr-11 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                        <label for="login-password" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                            <i data-lucide="lock" class="w-4 h-4"></i> Senha
+                        </label>
+                        <button type="button" onclick="togglePasswordVisibility('login-password', 'login-eye-icon')" class="absolute right-3.5 top-4 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <i id="login-eye-icon" data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Options: Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between text-sm pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" class="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 accent-indigo-600">
+                            <span class="text-slate-600 text-xs font-medium">Lembrar de mim</span>
+                        </label>
+                        <button type="button" onclick="openForgotModal()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition">
+                            Esqueceu a senha?
+                        </button>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-200 flex items-center justify-center gap-2 text-sm mt-6">
+                        <span>Acessar Plataforma</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- ================= FORM 2: CADASTRO ================= -->
+            <div id="register-form-container" class="hidden transition-all duration-300">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Crie sua conta grátis 🚀</h2>
+                    <p class="text-slate-500 text-sm mt-1">Comece seu teste grátis de 14 dias. Sem cartão de crédito.</p>
+                </div>
+
+                <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4">
+                    <!-- Name Field -->
+                    <div class="relative">
+                        <input type="text" id="reg-name" required placeholder=" " 
+                               class="peer w-full px-4 pt-6 pb-2 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                        <label for="reg-name" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                            <i data-lucide="user" class="w-4 h-4"></i> Nome completo
+                        </label>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="relative">
+                        <input type="email" id="reg-email" required placeholder=" " 
+                               class="peer w-full px-4 pt-6 pb-2 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                        <label for="reg-email" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                            <i data-lucide="mail" class="w-4 h-4"></i> E-mail profissional
+                        </label>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="relative">
+                        <input type="password" id="reg-password" required placeholder=" " oninput="checkPasswordStrength(this.value)"
+                               class="peer w-full px-4 pt-6 pb-2 pr-11 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                        <label for="reg-password" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                            <i data-lucide="lock" class="w-4 h-4"></i> Criar senha
+                        </label>
+                        <button type="button" onclick="togglePasswordVisibility('reg-password', 'reg-eye-icon')" class="absolute right-3.5 top-4 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <i id="reg-eye-icon" data-lucide="eye" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Password Strength Meter -->
+                    <div class="space-y-1 pt-1">
+                        <div class="flex h-1.5 w-full bg-slate-100 rounded-full overflow-hidden gap-1">
+                            <div id="strength-bar-1" class="h-full w-1/3 bg-slate-200 transition-all duration-300"></div>
+                            <div id="strength-bar-2" class="h-full w-1/3 bg-slate-200 transition-all duration-300"></div>
+                            <div id="strength-bar-3" class="h-full w-1/3 bg-slate-200 transition-all duration-300"></div>
+                        </div>
+                        <p id="strength-text" class="text-[11px] text-slate-400 font-medium text-right">Mínimo de 8 caracteres</p>
+                    </div>
+
+                    <!-- Terms Agreement Checkbox -->
+                    <div class="flex items-start gap-2.5 pt-2">
+                        <input type="checkbox" id="terms-check" required class="mt-0.5 w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 accent-indigo-600">
+                        <label for="terms-check" class="text-xs text-slate-500 leading-tight">
+                            Eu concordo com os <a href="#" class="text-indigo-600 underline hover:text-indigo-800">Termos de Serviço</a> e a <a href="#" class="text-indigo-600 underline hover:text-indigo-800">Política de Privacidade</a>.
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-200 flex items-center justify-center gap-2 text-sm mt-4">
+                        <span>Criar Minha Conta</span>
+                        <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer switch note -->
+            <p class="text-center text-xs text-slate-500 mt-8">
+                Protegido por reCAPTCHA. Aplicam-se as diretrizes de segurança da rede.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgot-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border border-slate-100 relative transform scale-95 transition-transform duration-300" id="modal-box">
+            <button onclick="closeForgotModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-4">
+                <i data-lucide="key-round" class="w-6 h-6"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-slate-900 mb-1">Recuperar Senha</h3>
+            <p class="text-slate-500 text-sm mb-6">Digite seu e-mail cadastrado e enviaremos um link para redefinição de senha.</p>
+
+            <form onsubmit="handleForgotSubmit(event)" class="space-y-4">
+                <div class="relative">
+                    <input type="email" id="modal-email" required placeholder=" " 
+                           class="peer w-full px-4 pt-6 pb-2 rounded-xl glass-input border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-indigo-500 font-medium">
+                    <label for="modal-email" class="absolute left-4 top-3 text-slate-400 text-sm pointer-events-none transition-all duration-200 font-medium flex items-center gap-1.5">
+                        <i data-lucide="mail" class="w-4 h-4"></i> E-mail de cadastro
+                    </label>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeForgotModal()" class="w-1/2 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="w-1/2 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md shadow-indigo-500/20 text-sm transition">
+                        Enviar Link
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const loginBtn = document.getElementById('tab-login-btn');
+            const registerBtn = document.getElementById('tab-register-btn');
+            const loginForm = document.getElementById('login-form-container');
+            const registerForm = document.getElementById('register-form-container');
+
+            if (tab === 'login') {
+                loginBtn.className = "flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 bg-white text-slate-900 shadow-sm";
+                registerBtn.className = "flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 text-slate-500 hover:text-slate-900";
+                
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                registerBtn.className = "flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 bg-white text-slate-900 shadow-sm";
+                loginBtn.className = "flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 text-slate-500 hover:text-slate-900";
+                
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            }
+        }
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        // Password Strength Indicator Logic
+        function checkPasswordStrength(val) {
+            const bar1 = document.getElementById('strength-bar-1');
+            const bar2 = document.getElementById('strength-bar-2');
+            const bar3 = document.getElementById('strength-bar-3');
+            const label = document.getElementById('strength-text');
+
+            if (val.length === 0) {
+                bar1.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                bar2.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                bar3.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                label.textContent = 'Mínimo de 8 caracteres';
+                label.className = 'text-[11px] text-slate-400 font-medium text-right';
+            } else if (val.length < 6) {
+                bar1.className = 'h-full w-1/3 bg-rose-500 transition-all duration-300';
+                bar2.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                bar3.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                label.textContent = 'Fraca';
+                label.className = 'text-[11px] text-rose-500 font-semibold text-right';
+            } else if (val.length < 10) {
+                bar1.className = 'h-full w-1/3 bg-amber-500 transition-all duration-300';
+                bar2.className = 'h-full w-1/3 bg-amber-500 transition-all duration-300';
+                bar3.className = 'h-full w-1/3 bg-slate-200 transition-all duration-300';
+                label.textContent = 'Média';
+                label.className = 'text-[11px] text-amber-500 font-semibold text-right';
+            } else {
+                bar1.className = 'h-full w-1/3 bg-emerald-500 transition-all duration-300';
+                bar2.className = 'h-full w-1/3 bg-emerald-500 transition-all duration-300';
+                bar3.className = 'h-full w-1/3 bg-emerald-500 transition-all duration-300';
+                label.textContent = 'Forte! 🔒';
+                label.className = 'text-[11px] text-emerald-600 font-bold text-right';
+            }
+        }
+
+        // Modal Handlers
+        function openForgotModal() {
+            const modal = document.getElementById('forgot-modal');
+            const box = document.getElementById('modal-box');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeForgotModal() {
+            const modal = document.getElementById('forgot-modal');
+            const box = document.getElementById('modal-box');
+            modal.classList.add('opacity-0');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Notification Toast Handler
+        function showNotification(text, type = 'success') {
+            const toast = document.getElementById('toast-message');
+            toast.textContent = text;
+            
+            if (type === 'success') {
+                toast.className = "mb-6 p-4 rounded-xl text-sm font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-2";
+            } else {
+                toast.className = "mb-6 p-4 rounded-xl text-sm font-medium bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-2";
+            }
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Form Submit Actions
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            showNotification(`Autenticando... Bem-vindo de volta, ${email}!`);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            showNotification(`Conta criada com sucesso! Bem-vindo(a), ${name}.`, 'success');
+            setTimeout(() => switchTab('login'), 2000);
+        }
+
+        function handleForgotSubmit(e) {
+            e.preventDefault();
+            closeForgotModal();
+            showNotification('Link de recuperação enviado para o seu e-mail!');
+        }
+
+        function handleSocialAuth(provider) {
+            showNotification(`Iniciando autenticação via ${provider}...`);
+        }
+    </script>
+</body>
+</html>
+```
